@@ -5,7 +5,6 @@ Bu uygulama, e-ticaret sitelerindeki (örneğin Trendyol) ürün yorumlarını a
 ## Özellikler
 
 - Selenium ile dinamik web sayfalarından yorumları otomatik çekme
-- Çoklu sayfa desteği (ilk 3 sayfa)
 - Yorumların duygu analizi (Olumlu/Olumsuz/Nötr)
 - Yüzdesel dağılım gösterimi
 - Örnek yorumların gösterimi
