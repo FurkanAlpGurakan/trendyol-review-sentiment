@@ -8,16 +8,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
-# ✅ Gemini API key
-genai.configure(api_key="AIzaSyDy-7X90nukqgXkHlNF1xWgl6-Zrreaf1I")
-
-# ✅ Gemini model tanımı
+#  Gemini API key
+genai.configure(api_key="Buraya API Key Gelecek")
 model = genai.GenerativeModel(model_name="gemini-2.0-flash")
-
-# ✅ FastAPI başlat
 app = FastAPI()
 
-# ✅ CORS ayarları (Flutter için açık)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -26,7 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ✅ Çerezleri kabul etme fonksiyonu
+
 def accept_cookies(driver):
     try:
         cookie_button = driver.find_element(By.ID, "onetrust-accept-btn-handler")
@@ -35,7 +30,6 @@ def accept_cookies(driver):
     except:
         pass  # Buton yoksa devam et
 
-# ✅ Trendyol yorumlarını Selenium ile çekme (sonsuz kaydırmalı)
 def scrape_trendyol_comments(url: str, max_comments: int = 100) -> str:
     try:
         chrome_options = Options()
@@ -82,14 +76,14 @@ def scrape_trendyol_comments(url: str, max_comments: int = 100) -> str:
         if not comments:
             return "Yorum bulunamadı."
 
-        # ❗ Her yorumun sonuna '.\n' ekle
+      
         formatted_comments = [comment + ".\n" for comment in comments]
         return "".join(formatted_comments)
 
     except Exception as e:
         return f"Scraping hatası: {e}"
 
-# ✅ Prompt oluşturma
+
 def generate_prompt(all_comments: str) -> str:
     prompt = (
         "Aşağıda birçok kullanıcı yorumları verilmiştir. "
@@ -103,7 +97,7 @@ def generate_prompt(all_comments: str) -> str:
 
 
 
-# ✅ /analyze endpoint
+
 @app.post("/analyze")
 async def analyze_link(request: Request):
     data = await request.json()
@@ -122,7 +116,7 @@ async def analyze_link(request: Request):
     try:
         response = model.generate_content(prompt)
         
-        # ❗ Doğru cevabı al: Gemini bazen .text yerine candidates altında döner
+     
         if hasattr(response, 'candidates') and response.candidates:
             text = response.candidates[0].content.parts[0].text
         else:
